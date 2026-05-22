@@ -44,16 +44,27 @@
       margin-bottom: 14px;
     }
     header h1 { font-size: 1.2rem; font-weight: 700; }
-    .add-btn {
+    .fab {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
       background: var(--accent);
       color: #fff;
       border: none;
-      border-radius: 8px;
-      padding: 8px 16px;
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 1.8rem;
+      line-height: 1;
       cursor: pointer;
+      box-shadow: 0 4px 16px rgba(74,124,89,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 90;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
+    .fab:active { transform: scale(0.92); box-shadow: 0 2px 8px rgba(74,124,89,0.3); }
     .tabs {
       display: flex;
       gap: 4px;
@@ -366,7 +377,6 @@
       ☁
       <span class="sync-dot" id="sync-dot"></span>
     </button>
-    <button class="add-btn" onclick="openAddModal()">+ Add Task</button>
   </div>
   <div class="tabs">
     <button class="tab-btn active" id="tab-list" onclick="switchTab('list')">List</button>
@@ -389,6 +399,8 @@
     <div id="cal-detail"></div>
   </div>
 </main>
+
+<button class="fab" onclick="openAddModal()">+</button>
 
 <!-- Add/Edit Modal -->
 <div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
@@ -429,10 +441,9 @@
       <label>Sync key</label>
       <input type="text" id="f-synckey" placeholder="Enter a secret word or phrase" autocomplete="off" />
     </div>
-    <p style="font-size:0.8rem;color:var(--muted);margin-top:-8px">Use the same key on all your devices. Anyone with this key can access your tasks.</p>
-    <div class="sync-row" style="margin-top:20px">
-      <button class="btn-secondary" onclick="pullFromSupabase()">⬇ Pull from cloud</button>
-      <button class="btn-primary" onclick="pushToSupabase()">⬆ Push to cloud</button>
+    <p style="font-size:0.8rem;color:var(--muted);margin-top:-8px">Use the same key on all your devices. Changes sync automatically.</p>
+    <div style="margin-top:20px">
+      <button class="btn-primary" style="width:100%" onclick="pullFromSupabase()">⬇ Load from cloud</button>
     </div>
     <div class="sync-status" id="sync-status"></div>
     <div class="modal-actions" style="margin-top:16px">
