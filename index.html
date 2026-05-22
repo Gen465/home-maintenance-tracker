@@ -596,6 +596,7 @@ function daysUntil(dateStr) {
 }
 
 function urgency(task) {
+  if (task.lastDone === todayStr()) return 'ok';
   const d = daysUntil(dueDate(task));
   if (d < 0)  return 'overdue';
   if (d <= 3) return 'soon';
