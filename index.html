@@ -104,18 +104,25 @@
     .task-card.soon    { border-left: 4px solid var(--warn);   background: var(--warn-light); }
     .task-card.ok      { border-left: 4px solid var(--accent); }
     .check-circle {
-      width: 28px;
-      height: 28px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       border: 2px solid var(--border);
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.15s, border-color 0.15s;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
-    .check-circle:hover { border-color: var(--accent); background: var(--accent-light); }
-    .check-circle svg { display: none; }
+    .check-circle:hover, .check-circle:active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      transform: scale(1.15);
+    }
+    .check-circle svg { display: block; opacity: 0.3; transition: opacity 0.15s; }
+    .check-circle:hover svg, .check-circle:active svg { opacity: 1; }
     .task-info { flex: 1; min-width: 0; }
     .task-name { font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .task-meta { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
@@ -182,6 +189,7 @@
     }
     .cal-day.empty { background: transparent; border-color: transparent; }
     .cal-day.today { border-color: var(--accent); font-weight: 700; }
+    .cal-day.selected { background: var(--accent-light); border-color: var(--accent); }
     .cal-day.has-tasks { cursor: pointer; }
     .cal-day-num { font-size: 0.75rem; line-height: 1; }
     .cal-day.today .cal-day-num {
