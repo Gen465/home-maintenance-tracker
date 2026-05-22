@@ -439,7 +439,7 @@
     <h2>Cloud Sync</h2>
     <div class="field">
       <label>Sync key</label>
-      <input type="text" id="f-synckey" placeholder="Enter a secret word or phrase" autocomplete="off" />
+      <input type="text" id="f-synckey" placeholder="Enter a secret word or phrase" autocomplete="off" oninput="onSyncKeyInput(this.value)" />
     </div>
     <p style="font-size:0.8rem;color:var(--muted);margin-top:-8px">Use the same key on all your devices. Changes sync automatically.</p>
     <div style="margin-top:20px">
@@ -463,6 +463,20 @@ const SYNC_KEY_STORE = 'home-maintenance-synckey';
 
 function getSyncKey() { return localStorage.getItem(SYNC_KEY_STORE) || ''; }
 function setSyncKey(k) { localStorage.setItem(SYNC_KEY_STORE, k); }
+
+function onSyncKeyInput(val) {
+  const key = val.trim();
+  const wasEmpty = !getSyncKey();
+  setSyncKey(key);
+  if (key && wasEmpty) {
+    setSyncStatus('Key saved — uploading your tasks…', '');
+    autoPush().then(() => setSyncStatus('Saved and synced ✓', 'ok'));
+  } else if (key) {
+    setSyncStatus('Key saved ✓', 'ok');
+  } else {
+    setSyncStatus('', '');
+  }
+}
 
 async function pushToSupabase() {
   const key = document.getElementById('f-synckey').value.trim();
